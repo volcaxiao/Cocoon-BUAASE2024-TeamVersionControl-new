@@ -1,3 +1,5 @@
-- lzh：
-    直接推到了上游仓库
-    建错了pr，改分支的时候，close了一下
+- 建pr直接推到了上游仓库。
+- 一个重大问题：Task1结束，dev分支合到main分支的时候，采用的时squash merge，这样导致整个Task1的Commit合成了一个，然后Task2完成dev合到main的时候发现，dev分支前面的Commit和main分支前面的commit是不一致的。
+  - 解决方案：我们把dev分支rebase到main分支，然后使用`--interactive`选项，把dev分支再Task1的Commit删除掉，然后再合并到main分支。
+  - 而且像上面一样解决问题会导致dev和main的commit历史不一致，所以在完成上述操作之后应该删除远程的dev分支，然后从main重新创建一个dev分支。
+  - 启示：在其他分支合到dev上的时候可以采用rebase和squash merge，但是在dev合到main的时候，不要采用squash merge，要采用merge！
